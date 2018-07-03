@@ -97,7 +97,7 @@ dwplot <- function(x,
     # argument checks
     #if (length(style) > 1) style <- style[[1]]
     #if (!style %in% c("dotwhisker", "distribution")) stop("style must be dotwhisker or distribution")
-    style <- match.args(style)
+    style <- match.arg(style)
   
     # If x is model object(s), convert to a tidy data frame
     df <- dw_tidy(x, by_2sd, ...)
