@@ -95,9 +95,10 @@ dwplot <- function(x,
                    line_args = list(alpha = .75, size = 1),
                    ...) {
     # argument checks
-    if (length(style) > 1) style <- style[[1]]
-    if (!style %in% c("dotwhisker", "distribution")) stop("style must be dotwhisker or distribution")
-
+    #if (length(style) > 1) style <- style[[1]]
+    #if (!style %in% c("dotwhisker", "distribution")) stop("style must be dotwhisker or distribution")
+    style <- match.args(style)
+  
     # If x is model object(s), convert to a tidy data frame
     df <- dw_tidy(x, by_2sd, ...)
 
@@ -129,8 +130,9 @@ dwplot <- function(x,
     # Specify order of variables if an order is provided
     if (!is.null(order_vars)) {
         df$term <- factor(df$term, levels = order_vars)
-        df <- df[match(order_vars, df$term),] %>% stats::na.omit()
-    }
+##        df <- df[match(order_vars, df$term),] %>% stats::na.omit()
+           df <- df[order(df$term),]  
+ }
 
     # Add rows of NAs for variables not included in a particular model
     if (n_models > 1) {
